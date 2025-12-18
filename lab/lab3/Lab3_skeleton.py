@@ -2,11 +2,13 @@
 # ส่วนที่ 1: พื้นที่สำหรับนักศึกษา (Student Implementation Area)
 # =============================================================================
 
+
 class Student():
     def __init__(self, id, name):
         self.__id = id
         self.__name = name
         self.__enroll = []
+        self.__grade = 0.0
     
     def enroll(self, subject):
         if isinstance(subject, Subject):
@@ -15,6 +17,8 @@ class Student():
                     return  "Already Enrolled" 
             self.__enroll.append(Enrollment(subject))
             return "Done"
+        else:
+            return "Error"
             
     def drop(self, subject1):
         if isinstance(subject1, Subject):
@@ -22,16 +26,38 @@ class Student():
                 if subject1 == sub.get_sub():
                     self.__enroll.pop(index)
                     return "Done"
-            return "Not found"
+            return "Not Found"
+        else:
+            return "Error"
             
     def get_enrolled_subjects(self):
         return [x.get_sub() for x in self.__enroll]
     
     def assign_grade(self, subject, grade):
-        
+        if isinstance(subject, Subject):
+            for index, sub in enumerate(self.__enroll):
+                if subject == sub.get_sub():
+                    self.__enroll[index].re_grade(grade)
+                    return
+            return "Not Found"
 
+    def get_gps(self):
+        self.__allCredit = []
+        self.__point = []
 
-
+        for _, sub in enumerate(self.__enroll):
+            cre = sub.get_sub().get_credit()
+            gra = sub.get_grade()
+            if gra == -1:
+                continue
+            gra *= (sub.get_sub().get_credit())
+            self.__allCredit.append(cre)
+            self.__point.append(gra)
+        if sum(self.__allCredit) == 0 or sum(self.__point) == 0:
+            return 0.0
+        else:
+            self.__grade = sum(self.__point)/sum(self.__allCredit)
+            return self.__grade
 
 
 
@@ -48,23 +74,43 @@ class Subject():
 
     def get_credit(self):
         return self.__credit
-        
+    
 
+        
 
 
 class Teacher():
     def __init__(self, id, name):
         self.__id = id
         self.__name = name
-        pass
 
 class Enrollment():
     def __init__(self, subject):
         self.__subject = subject
-        self.__grade = 0
+        self.__grade = -1
+        # self.__map = {"A":4, "B":3, "C":2, "D":1, "F":0}
     
     def get_sub(self):
         return self.__subject
+    
+    def re_grade(self, grade):
+        # self.__grade = self.__map[grade]
+        if grade == "A":
+            self.__grade = 4
+        elif grade == "B":
+            self.__grade = 3
+        elif grade == "C":
+            self.__grade = 2
+        elif grade == "D":
+            self.__grade = 1
+        elif grade == "F":
+            self.__grade = 0
+        else:
+            self.__grade = -1
+        
+    def get_grade(self):
+        return self.__grade
+        
         
     
 
