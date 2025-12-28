@@ -1,0 +1,83 @@
+@startuml
+
+
+class Bank{
+-Name : str
+-User : list
+-ATM_machine : list
++add_user(User) : void
++get_atm_by_id(ATM_ID) : ATM_machine
++search_account_from_atm(atmNum) : Account
++add_atm_machine(ATM_machine) : void
+}
+
+class User{
+-ID : str
+-name : str
+-Account : list
++add_account(Account) : void
++get_account() : list
++get_name() : str 
+}
+
+class Account{
+-account_no : str
+-user : class
+-balance : float
+-Transaction : list
+-atm_card : class
++add_atm_card(ATM_Card) : void
++atm_card() : class
++get_accNum() : str
++account_no() : str
++user() : class
++amount() : float
++Transaction() : list
++fee() : void
++transferIn(amountIn) : void
++print_transactions() : void
++deposit(ATM, amount) : void
++withdraw(ATM, amount) : void
++transfer(ATM, amount, payee) : void
+}
+
+class ATM_Card{
+-cardNum : str
+-accNum : str
+-PIN : str
++check_PIN(PIN) : bool
++get_cardNum() : str
+}
+
+class ATM_machine{
+-ATM_ID : str
+-cash : float
+-isInsert : bool
+-card : class
++get_ATM_ID() : str
++insert_card(ATM_Card,PIN) : void
++cardAcc() : class
++isInsert() : bool
++cash() : float
++cash(cashIn) : void
+}
+
+class Transaction{  
+-atm_ID : str
+-type : str
+-amount : float
+-balance : float
+-payee : str
++Print() : void
+}
+
+
+Bank o--  User : ""
+Bank o--  ATM_machine : ""
+Account <-o  User : ""
+Account o--  Transaction : ""
+Account <-->  ATM_Card : ""
+
+
+
+@enduml

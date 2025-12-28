@@ -88,13 +88,12 @@ class Enrollment():
     def __init__(self, subject):
         self.__subject = subject
         self.__grade = -1
-        # self.__map = {"A":4, "B":3, "C":2, "D":1, "F":0}
+
     
     def get_sub(self):
         return self.__subject
     
     def re_grade(self, grade):
-        # self.__grade = self.__map[grade]
         if grade == "A":
             self.__grade = 4
         elif grade == "B":
