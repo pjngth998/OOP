@@ -1,0 +1,171 @@
+@startuml
+
+class Account{
+    -account_no : str
+    -user : class
+    -balance : float
+    -card : class
+    +amount() : float
+    +card() : class
+    +account_no() : str
+    +user() : class
+    +add_card(card) : void
+    +_validate_channel_session(channel) : void
+    +_create_transaction(type, channel_type, channel_id, amount, balance, target) : void
+    +print_transactions() : void
+    +get_last_transaction() : class
+    +get_transaction(count) : class
+    +_get_channel_id(channel) : str
+    +get_account_type() : str
+    +calculate_interest() : str
+    +_check_withdraw_limit(amount) : bool
+    +deposit(channel, amount) : void
+    +withdraw(channel, amount) : void
+    +transfer(channel, amount) : void
+    +receive_transfer(amount, channel, source_acc_no)
+}
+
+class Card{
+    -card_no = card_no
+    -account_no = account_no
+    -pin = pin
+    +card_no() : str
+    +account_no() : 
+    +validate_pin(pin_input) : bool
+    +get_card_type() : str
+}
+
+class Channel{
+    +authenticate(*args, **kwargs) : bool
+
+}
+
+class SavingAccount{
+    +get_account_type() : str
+    +calculate_interest() : str
+    +_check_withdraw_limit() : bool
+
+}
+
+class FixedAccount{
+    -term_months : int
+    -stardate : datetime
+    -maturity_date : datetime
+    +get_account_type() : str
+    +calculate_interest(early_withdraw) : str
+    +_check_withdraw_limit(amount) : str
+}
+
+class CurrentAccount{
+    +get_account_type() : str
+    +calculate_interest() : int
+    +_check_withdraw_limit(amount) : void
+}
+
+class ATM_Card{
+    +get_card_type() : str
+    +charge_annual_fee(account) : void
+    
+}
+
+class Debit_Card{
+    +get_card_type() : str
+
+}
+
+class ShoppingCard{
+    +charge_annual_fee(account) : void
+    +refund() : void
+}
+
+class PremiumCard{
+    +charge_annual_fee(account) : void
+    +refund() : void
+    +_check_withdraw_limit(amount) : void
+}
+
+class ATM_machine{
+    -atm_no : str
+    -money : int
+    -current_card : class
+    +atm_no() : str
+    +money() : int
+    +authenticate(card, pin) : bool
+    +insert_card(card, pin) : bool
+    +eject_card() : void
+    +has_sufficient_cash(amount) : bool
+    +dispense_cash(amount) : void
+    +receive_cash(amount) : void
+}
+
+class EDC_machine{
+    -edc_no : str
+    -account : class
+    +authenticate(card, pin) : bool
+    +insert_card(card, pin) : bool
+    +eject_card() : void
+    +_check_withdraw_limit() : bool
+    +current_card() : class
+}
+
+class Counter{
+    -counter_no : str
+    -current_account : class
+    +verify_identity(account, citizen_id) : bool
+    +clear_session() : void
+}
+
+class Bank{
+    -name : str
+    -user_list : list
+    -atm_list : list
+    -edc_list : list
+    -counter_list : list
+    +add_user(user) : void
+    +add_atm_machine(atm) : void
+    +add_edc_machine(edc) : void
+    +add_counter(counter) : void
+    +get_atm_by_id(atm_id) : class
+    +get_edc_by_id(edc_id) : class
+    +get_counter_by_id(counter_id) : class
+    +search_account_from_card(card_no) : class
+}
+
+class User{
+    -citizen_id : str
+    -name : str
+    -account_list : list
+    +add_account(account) : void
+    +search_account_from_card(card_no) : class
+    +get_all_accounts() : list
+    +get_citizen_id() : str
+}
+
+class Transaction{
+    -type : str
+    -channel_type : str
+    -channel_id : str
+    -amount : float
+    -balance : float
+    -timestamp : datetime
+}
+
+Account <|-- CurrentAccount
+Account <|-- FixedAccount
+Account <|-- SavingAccount
+Card <|-- ATM_Card 
+Card <|-- Debit_Card
+Debit_Card <|-- ShoppingCard
+Debit_Card <|-- PremiumCard
+Channel  <|-- ATM_machine
+Channel <|--  EDC_machine
+Channel <|-- Counter
+Account o--  Transaction
+Bank o--  User
+Bank o--  EDC_machine
+Bank o--  Counter
+Bank o-- ATM_machine
+Account <-> Card
+User o-- Account
+
+@enduml

@@ -203,8 +203,8 @@ class ATM_machine:
             if atm_card.check_PIN(pin):
                 self.__card = atm_card
                 self.__isInsert = True
-                return True
-            else: return False
+            #     return True
+            # else: return False
 
     @property
     def cardAcc(self):
@@ -294,6 +294,7 @@ def run_test():
         return
 
     harry_card = harry_account.atm_card
+    hermione_card = hermione_account.atm_card
     
     print("\n--- Test Case #1 : Insert Card (Harry) ---")
     print(f"Harry's Account No : {harry_account.account_no}")
@@ -305,6 +306,8 @@ def run_test():
 
     print("\n--- Test Case #2 : Deposit 1000 to Hermione ---")
     print(f"Before: {hermione_account.amount}")
+
+    atm_machine2.insert_card(hermione_card, "1234")
 
     try:
         hermione_account.deposit(atm_machine2, 1000)
@@ -340,6 +343,8 @@ def run_test():
     print("\n--- Test Case #6 : Transfer 10000 from Harry to Hermione ---")
     print(f"Harry Before: {harry_account.amount}")
     print(f"Hermione Before: {hermione_account.amount}")
+
+    atm_machine2.insert_card(harry_card, "1234")
 
     try:
         harry_account.transfer(atm_machine2, 10000, hermione_account)

@@ -74,7 +74,7 @@ class Transaction{
 
 Bank o--  User : ""
 Bank o--  ATM_machine : ""
-Account <-o  User : ""
+Account --o  User : ""
 Account o--  Transaction : ""
 Account <-->  ATM_Card : ""
 
